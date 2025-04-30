@@ -4,9 +4,9 @@ import Navbar from "./Navbar";
 
 export default function Header() {
     return (
-        <header>
-            <div className="container">
-                <Link href={Routes.ROOT} >Pizzza</Link>
+        <header className="py-4 md:py-6">
+            <div className="container flex items-center justify-between">
+                <Link href={Routes.ROOT} className="text-primary font-semibold text-2xl">Pizzza</Link>
                 <Navbar />
             </div>
         </header>
