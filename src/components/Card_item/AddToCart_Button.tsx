@@ -13,45 +13,11 @@ import Image from "next/image"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Extra, Size } from "@prisma/client"
+import { ProductWithItsRelations } from "@/types/product"
 
-const sizes = [
-  {
-    id: crypto.randomUUID(),
-    name: "Small",
-    price: 10,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "Medium",
-    price: 15,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "Large",
-    price: 20,
-  }, 
-]
 
-const extras = [
-  {
-    id: crypto.randomUUID(),
-    name: "Cheese",
-    price: 5,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "Onions",
-    price: 10,
-  },  
-  {
-    id: crypto.randomUUID(),
-    name: "Mushrooms",
-    price: 15,
-  },
-  
-  
-]
-export default function AddToCart_Button({ item }: { item: any }) {
+export default function AddToCart_Button({ item }: { item: ProductWithItsRelations }) {
   return (
     <>
     <Dialog>
@@ -69,11 +35,11 @@ export default function AddToCart_Button({ item }: { item: any }) {
           <div className="space-y-8">
             <div>
               <Label htmlFor="size" className="text-lg font-bold">Choose your Size</Label>
-              <ChooseSize sizes={sizes} />
+              <ChooseSize sizes={item.sizes} />
             </div>
             <div>
               <Label htmlFor="extra" className="text-lg font-bold">Any Extras ?</Label>
-              <ChooseExtra extras={extras} />
+              <ChooseExtra extras={item.extras} />
             </div>
         </div>
         <DialogFooter>
@@ -87,10 +53,10 @@ export default function AddToCart_Button({ item }: { item: any }) {
 }
 
 
-function ChooseSize({sizes }: {sizes: any}) {
+function ChooseSize({sizes }: {sizes: Size[]}) {
   return (
     <RadioGroup defaultValue="comfortable">
-      {sizes.map((size: any) => (
+      {sizes.map((size) => (
         <div className="flex items-center space-x-2" key={size.id}>
           <RadioGroupItem value={size.name} id={size.id} className="border-primary"/>
           <Label htmlFor={size.id}> {size.name} = ${size.price} </Label>
@@ -100,10 +66,10 @@ function ChooseSize({sizes }: {sizes: any}) {
   )
 }
 
-function ChooseExtra({extras }: {extras: any}) {
+function ChooseExtra({extras }: {extras: Extra[]}) {
   return (
     <>
-      {extras.map((extra: any) => (
+      {extras.map((extra) => (
         <div className="space-y-2 space-x-2" key={extra.id}>
           <Checkbox className="border-primary" id={extra.id}  />
           <label

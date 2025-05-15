@@ -35,9 +35,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-
-
-<!-- 
+<!--
 
 ##### General notes
 
@@ -45,15 +43,26 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ==  to make my project responsive i need to put each component inside container class
 
-    i can modify container class in 'global.css' file like this 
+    i can modify container class in 'global.css' file like this
     .container{
     @apply mx-auto px-4 md:px-8 lg:px-12;
     }
 
 
-=== <Image src="" alt="" fill loading="eager" priority />   >>> fill property is to fill all div 
-                                                            >>> loading="eager" is to load image before page load 
+=== <Image src="" alt="" fill loading="eager" priority />   >>> fill property is to fill all div
+                                                            >>> loading="eager" is to load image before page load
                                                             >>> priority is to load image immediately not lazy
+
+
+==  to make my project accept images i need to go to "next.config.ts" and put fixed code >>>
+const nextConfig: NextConfig = {
+  /* config options here */
+  images: {
+    remotePatterns: [{protocol:'https' , hostname:'**'}],
+  },
+};
+
+
 
 ===================================================================================================================================================
 ===================================================================================================================================================
@@ -62,13 +71,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 === i can determine the font of the app
 
-for example : 
+for example :
 --  import { Roboto } from "next/font/google";
-   
+
     const roboto = Roboto({
     subsets: ["latin"],
     weight: ["400", "500", "700"],
-    preload: true,  
+    preload: true,
     });
 
     <body
@@ -85,8 +94,8 @@ for example :
 ### link.tsx page
 
 ==  the code is copy paste and the idea of that custom link component is :
-    next.js prefetch all pages of all links when start app but because of that component 
-    it will prefetch the page of determined link only when i hover on that link    
+    next.js prefetch all pages of all links when start app but because of that component
+    it will prefetch the page of determined link only when i hover on that link
 
     don't forget to make the import Link step is from link component
 
@@ -106,7 +115,7 @@ for example :
 
 ### header.tsx page
 
-==  
+==
 
 
 
@@ -137,7 +146,7 @@ for example :
         <ul className={`fixed lg:static ${
             openMenu ? "left-0 z-50" : "-left-full "
             } top-0 px-10 py-20 lg:p-0 bg-background lg:bg-transparent transition-all duration-200 h-full lg:h-auto flex-col lg:flex-row w-full lg:w-auto flex items-start lg:items-center gap-10`}>
-          
+
         <Button
         variant="secondary"
         size="sm"
@@ -152,5 +161,66 @@ for example :
 
 
 
+===================================================================================================================================================
+===================================================================================================================================================
 
- -->
+############# Prisma ORM
+
+=== in this app i run : npm install prisma@6.0.1 @prisma/client@6.0.1 --save-dev as new versions have some proplems
+
+1 ==  install prisma >>> npm install prisma @prisma/client --save-dev
+
+2 ==  now prisma being in dev dependencies then i run command to create prisma file >>> npx prisma init
+
+ ==  in lib folder i need to create "prisma.ts" file and paste fixed code in this file
+
+3 ==  i need to run "pgAdmin" program to create database and i need to put the url of database in ".env" file
+
+4 ==  to make model of database defined in code >>> stop server >>> npx prisma generate >>> and i can skip this step to the next one
+
+5 ==  after write the schema in prisma/schema.prisma file i need to run command to create prisma file >>> npx prisma migrate dev
+
+==  to work in database in UI form you should install prisma studio >>> npx prisma studio
+
+
+===================================================================================================================================================
+===================================================================================================================================================
+
+
+#######  types folder -- product.ts file
+
+== this file to build a custom type to use it as type safty for TS to add features of Extra model and Size model to Product model of Prisma schema by model-name: true and where i write "db" variable i also write models-name in the included place and the "db.main-model-name" is the model name that i want to add other models for
+
+ex:
+const bestSellers = await db.product.findMany({
+    include: {
+      sizes: true,
+      extras: true,
+    }, 
+  })
+
+export type ProductWithItsRelations = Prisma.ProductGetPayload<{
+  include: {
+    sizes: true;
+    extras: true;
+  }
+}>
+
+
+===================================================================================================================================================
+===================================================================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+-->
+
+
+

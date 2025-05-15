@@ -1,6 +1,8 @@
 import Image from "next/image";
 import AddToCart_Button from "./AddToCart_Button";
-export default function CardItemContent({item}: {item: any}) {
+import { ProductWithItsRelations } from "@/types/product";
+
+export default function CardItemContent({item}: {item: ProductWithItsRelations}) {
   return (
     <li className="bg-white p-8 rounded-lg shadow-md">
               <div className="relative w-48 h-48 mx-auto">
