@@ -1,29 +1,14 @@
 import CardItem from "@/components/Card_item";
 import MainHeading from "@/components/main-heading";
 import { db } from "@/lib/prisma";
+import { getBestSellers } from "@/server/db/product";
 // import Image from "next/image";
 
 
 export default async function BestSellers() {
   
-  const bestSellers = await db.product.findMany({
-    where: {
-      order: {
-        gt: 0  // Only get products with order > 0
-      }
-    },
-    orderBy: {
-  order: 'desc'
-},
-    take: 3, // limit the number of displaying products to 3
-    include: {
-      sizes: true,
-      extras: true,
-    }, 
-  })
-
+  const bestSellers = await getBestSellers()
   
-
   return (
     <section className='section-gap'>
       <div className='container'>
