@@ -7,8 +7,9 @@ import { getBestSellers } from "@/server/db/product";
 
 export default async function BestSellers() {
   
+  // get bestSellers through caching
   const bestSellers = await getBestSellers()
-  
+
   return (
     <section className='section-gap'>
       <div className='container'>
