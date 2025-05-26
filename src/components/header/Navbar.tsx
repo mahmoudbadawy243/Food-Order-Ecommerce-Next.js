@@ -5,25 +5,28 @@ import Link from "../link";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Menu, XIcon } from "lucide-react";
+import { useParams, usePathname } from "next/navigation";
 
-export default function Navbar() {
+export default function Navbar({ translations }: { translations: {[key:string]:string }}) {
+    const { locale } = useParams()
+    const pathname = usePathname();
 
     const [openMenu, setOpenMenu] = useState(false);
 
     const links = [
     {
         id: crypto.randomUUID(),
-        title: 'menu',
+        title: translations.menu,
         href: Routes.MENU,
         },
         {
         id: crypto.randomUUID(),
-        title: 'about',
+        title: translations.about,
         href: Routes.ABOUT,
         },
         {
         id: crypto.randomUUID(),
-        title: 'contact',
+        title: translations.contact,
         href: Routes.CONTACT,
     },
     ];
@@ -52,14 +55,14 @@ export default function Navbar() {
         onClick={() => setOpenMenu(false)}
         >
             <XIcon className="!w-6 !h-6" />
-        </Button>
-
-
-                
+                </Button>
                 
             {links.map((link) => (
                 <li key={link.id}>
-                    <Link href={`/${link.href}`} className=" hover:text-primary duration-200 transition-colors font-semibold"> {link.title} </Link>
+                    <Link href={`/${locale}/${link.href}`}
+                        // this condition in classname is to make the active page appear in red color in navbar
+                        className={` hover:text-primary duration-200 transition-colors font-semibold ${pathname.startsWith(`/${locale}/${link.href}`) ? "text-primary" : "text-accent"}`}>  
+                        {link.title} </Link>
                 </li>
             ))}
 

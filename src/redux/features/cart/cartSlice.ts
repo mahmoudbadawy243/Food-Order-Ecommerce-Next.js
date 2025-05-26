@@ -19,7 +19,10 @@ type cartState = {
 //--------------------------------------------------------
 // if there are items in cart return this items and display it and if i press refresh not elemenate this items and if no items return []
 // it will happen by goto 'CartItem.tsx' file and write: useEffect(() => { localStorage.setItem('cartItems', JSON.stringify(cart)) }, [cart])
-const initialCartItems = localStorage.getItem('cartItems')
+
+// const initialCartItems = localStorage.getItem('cartItems')
+// The typeof window !== 'undefined' check ensures that the code only tries to access localStorage when running in the browser, preventing the error during server-side rendering
+const initialCartItems = typeof window !== 'undefined' ? localStorage.getItem('cartItems') : null;
 const initialState: cartState = {
   items: initialCartItems ? JSON.parse(initialCartItems): []
 } 

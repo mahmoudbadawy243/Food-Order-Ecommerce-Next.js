@@ -233,6 +233,22 @@ they are fixed steps , each step has a short explain in its file
 ===================================================================================================================================================
 
 
+########### Localization #############
+
+1} === in 'src' create 'middleware.ts' file
+2} === in 'src' create 'i18n.config.ts' file
+3} === create [locale] folder and put all folders and files of 'app' folder inside it
+4} === Modify 'layout.tsx' by writting 'generateStaticParams' fuction and params and direction
+5} === create 'dictionaries' folder in 'src' to contain translations
+6} === create 'translation.ts' file in 'lib' folder
+7} === create 'getCurrentLocale.ts' file in 'lib' folder
+8} === Goto each file and put translation in dynamic way
+9} === Create 'language-Sweatcher' Button in header
+
+
+===================================================================================================================================================
+===================================================================================================================================================
+
 
 
 

@@ -1,16 +1,22 @@
 import Link from "@/components/link";
 import { buttonVariants } from "@/components/ui/button";
-import { Routes } from "@/constants/enums";
+import { Languages, Routes } from "@/constants/enums";
+import { getCurrentLocale } from "@/lib/getCurrentLocale";
+import getTrans from "@/lib/translation";
 import { ArrowRightCircle } from "lucide-react";
 import Image from "next/image";
 
-export default function Hero() {
+export default async function Hero() {
+
+  const locale = await getCurrentLocale()
+  const { home } = await getTrans(locale)
+  const { hero } = home
   return (
     <section className="section-gap">
       <div className="container grid grid-cols-1 md:grid-cols-2">
         <div>
-          <h1 className='text-4xl font-semibold'> Lorem ipsum dolor sit amet. </h1>
-          <p className='text-accent my-4'> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet. Lorem ipsum, dolor sit amet consectetur adipisicing elit. </p>
+          <h1 className='text-4xl font-semibold'> {hero.title} </h1>
+          <p className='text-accent my-4'> {hero.description} </p>
           <div className='flex items-center gap-4'>
               <Link
                 href={`/${Routes.MENU}`}
@@ -18,18 +24,18 @@ export default function Hero() {
                   size: 'lg',
                 })} space-x-2 !px-4 !rounded-full uppercase`}
               >
-                Order Now
+                {hero.orderNow}
                 <ArrowRightCircle
-                  className=" !w-5 !h-5 "
+                  className= {`!w-5 !h-5 ${locale === Languages.ARABIC ? 'rotate-180 ' : '' }`} // to rotate arrows pased on languages
                 />
               </Link>
               <Link
                 href={`/${Routes.ABOUT}`}
                 className='flex gap-2 items-center text-black hover:text-primary duration-200 transition-colors font-semibold'
               >
-                Learn More
+                {hero.learnMore}
                 <ArrowRightCircle
-                  className= "!w-5 !h-5 "
+                  className= {`!w-5 !h-5 ${locale === Languages.ARABIC ? 'rotate-180 ' : ''}`} // to rotate arrows pased on languages
                 />
               </Link>
           </div>
