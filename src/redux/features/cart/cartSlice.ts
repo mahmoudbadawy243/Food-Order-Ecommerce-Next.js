@@ -17,10 +17,13 @@ type cartState = {
   items: CartItem[]
 }
 //--------------------------------------------------------
-
+// if there are items in cart return this items and display it and if i press refresh not elemenate this items and if no items return []
+// it will happen by goto 'CartItem.tsx' file and write: useEffect(() => { localStorage.setItem('cartItems', JSON.stringify(cart)) }, [cart])
+const initialCartItems = localStorage.getItem('cartItems')
 const initialState: cartState = {
-  items:[]
+  items: initialCartItems ? JSON.parse(initialCartItems): []
 } 
+
 export const cartSlice = createSlice({
   name: 'cart' ,
   initialState ,

@@ -6,16 +6,19 @@ import { deleteItemFromCart, removeItemFromCart, selectItemsOfCart } from "@/red
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { Trash2 } from "lucide-react"
 import Image from "next/image"
+import { useEffect } from "react"
 
 export default function CartItem() {
 
   const cart = useAppSelector(selectItemsOfCart)
   const dispatch = useAppDispatch()
   const subTotal = getSubTotal(cart)
-  console.log(cart)
+  
+  // this line is to always display cart from localstorage and not delete elements when press refresh
+  useEffect(() => { localStorage.setItem('cartItems', JSON.stringify(cart)) }, [cart])
+  
   return (
     <div>
-
       {cart && cart.length > 0 ? (
         <>
           <ul>
